@@ -1,0 +1,50 @@
+net:
+  proxy:
+    # 代理相关信息
+    - ip: 127.0.0.1
+      port: 1080
+      type: SOCKS
+ai:
+  max-num:
+    basic: 5  # 默认兜底策略
+    wechat: 10  # 公众号用户
+    star: 100 # 星球用户
+    star-try: 30 # 星球试用中用户
+    invited: 0.1  # 被邀请
+    invite-num: 0.2 # 邀请人数执行策略
+    star-number: 4000 # 目前为4000
+  source: #支持的AI模型
+    - CHAT_GPT_3_5
+    - CHAT_GPT_4
+    - PAI_AI
+    - XUN_FEI_AI
+# chatGpt
+chat-gpt:
+  main: CHAT_GPT_3_5
+  conf:
+    CHAT_GPT_3_5:
+      keys:
+        - #这里输入你的key,需要去申请，要钱。。。
+      proxy: true # 表示走上面的代理进行访问
+      api-host: https://api.openai.con/
+      time-out: 900
+      max-token: 3000
+    CHAT_GPT_4:
+      keys:
+        - #这里输入你的key,需要去申请，要钱。。。
+      proxy: true # 表示走上面的代理进行访问
+      api-host: https://api.openai.con/
+      time-out: 900
+      max-token: 20000
+  number:
+    #普通用户
+    normal: 50
+    vip: 100
+
+# 讯飞AI
+xun-fei:
+  host-url: https://spark-api.xf-yun.com/v2.1/chat # 作者原配置http://spark-api.xf-yun.com/v2.1/chat
+  domain: "genera-lv2" # 作者原配置 "generalv2"
+  app-id:
+  api-key:
+  api-secret:
