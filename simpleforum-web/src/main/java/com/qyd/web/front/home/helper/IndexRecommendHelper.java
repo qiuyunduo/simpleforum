@@ -1,12 +1,11 @@
 package com.qyd.web.front.home.helper;
 
-import com.qyd.api.model.vo.article.dto.CategoryDTO;
+import com.qyd.service.article.service.ArticleReadService;
 import com.qyd.service.article.service.CategoryService;
+import com.qyd.service.config.service.ConfigService;
+import com.qyd.service.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 首页推荐相关
@@ -18,6 +17,19 @@ import java.util.List;
 public class IndexRecommendHelper {
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private ArticleReadService articleReadService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private ConfigService configService;
+
+
+
+
 
 
 

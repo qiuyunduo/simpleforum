@@ -14,7 +14,7 @@ public class BaseDTO {
     private Long id;
 
     @ApiModelProperty(value = "创建时间")
-    private Date crateTime;
+    private Date createTime;
 
     @ApiModelProperty(value = "最后编辑时间")
     private Date updateTime;

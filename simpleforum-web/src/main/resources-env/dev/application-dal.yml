@@ -3,3 +3,29 @@ spring:
     url: jdbc:mysql://localhost:3306/${database.name}?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
     username: qiuyunduo
     password: 123456
+  redis:
+    host: localhost
+    port: 6379
+    password:
+
+# elasticsearch 配置
+elasticsearch:
+  # 是否开启ES? 本地启动如果没有安装ES,可以设置为false 关闭ES
+  open: false
+  # es 集群名称
+  cluster-name: elasticsearch
+  hosts: 127.0.0.1:9200
+  username: elastic
+  password: elastic
+  # es 请求方式
+  scheme: http
+  # es 连接超时时间
+  connect-timeout: 1000
+  # es socket 连接超时时间
+  socket-timeout: 30000
+  # es 请求超时时间
+  connection-request-timeout: 500
+  # es 最大连接数
+  max-connect-num: 100
+  # es 每个路由的最大连接数
+  max-connect-num-per-route: 100

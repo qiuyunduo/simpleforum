@@ -1,5 +1,6 @@
 package com.qyd.service.article.repository.dao;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
@@ -174,6 +175,15 @@ public class ArticleDao extends ServiceImpl<ArticleMapper, ArticleDO> {
                 .orderByDesc(ArticleDO::getToppingStat, ArticleDO::getCreateTime);
 
         return baseMapper.selectList(query);
+    }
+
+    @Deprecated
+    public Long countArticleByCategoryId(Long categoryId) {
+        LambdaQueryWrapper<ArticleDO> query = Wrappers.lambdaQuery();
+        query.eq(ArticleDO::getDeleted, YesOrNoEnum.NO.getCode())
+                .eq(ArticleDO::getStatus, PushStatusEnum.ONLINE.getCode())
+                .eq(ArticleDO::getCategoryId, categoryId);
+        return baseMapper.selectCount(query);
     }
 
     /**

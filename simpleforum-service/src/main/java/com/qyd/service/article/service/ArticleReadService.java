@@ -3,8 +3,10 @@ package com.qyd.service.article.service;
 import com.qyd.api.model.enums.HomeSelectEnum;
 import com.qyd.api.model.vo.PageListVo;
 import com.qyd.api.model.vo.PageParam;
+import com.qyd.api.model.vo.PageVo;
 import com.qyd.api.model.vo.article.dto.ArticleDTO;
 import com.qyd.api.model.vo.article.dto.SimpleArticleDTO;
+import com.qyd.api.model.vo.article.dto.TagDTO;
 import com.qyd.api.model.vo.user.dto.SimpleUserInfoDTO;
 import com.qyd.service.article.repository.entity.ArticleDO;
 
@@ -32,6 +34,14 @@ public interface ArticleReadService {
      * @return
      */
     String generateSummary(String content);
+
+    /**
+     * 查询文章标签列表
+     *
+     * @param articleId
+     * @return
+     */
+    PageVo<TagDTO> queryTagsByArticleId(Long articleId);
 
     /**
      * 查询文章详情，包括正文内容，分类，标签等信息
@@ -69,11 +79,14 @@ public interface ArticleReadService {
     List<ArticleDTO> queryTopArticlesByCategory(Long categoryId);
 
     /**
-     * 获取分类文章计数
+     * 获取分类文章计数,
+     * 下面已经有一个查询所有分类的文章数总和返回
+     * 这个查询单个分类下文章数的废弃掉
      *
      * @param categoryId
      * @return
      */
+    @Deprecated
     Long queryArticleCountByCategory(Long categoryId);
 
     /**

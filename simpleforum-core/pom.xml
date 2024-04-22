@@ -81,6 +81,16 @@
             <version>2.6.6</version>
         </dependency>
 
+        <!--  caffeine 缓存使用姿势   -->
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+
         <!-- 持久层相关依赖 mybatis plus 和 mysql-->
         <dependency>
             <groupId>org.mybatis</groupId>

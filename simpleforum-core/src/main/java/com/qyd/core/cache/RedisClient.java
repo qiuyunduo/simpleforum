@@ -371,6 +371,29 @@ public class RedisClient {
     }
 
     /**
+     * 找出排名靠前的n个
+     * 使用zRevRange实现
+     *
+     * @param key
+     * @param n
+     * @return
+     */
+    public static List<ImmutablePair<String, Double>> zTopNScoreNew(String key, int n) {
+        return template.execute(new RedisCallback<List<ImmutablePair<String, Double>>>() {
+            @Override
+            public List<ImmutablePair<String, Double>> doInRedis(RedisConnection redisConnection) throws DataAccessException {
+                Set<RedisZSetCommands.Tuple> set = redisConnection.zRevRangeWithScores(keyBytes(key), 0, n);
+                if (set == null) {
+                    return Collections.emptyList();
+                }
+                return set.stream()
+                        .map(tuple -> ImmutablePair.of(toObj(tuple.getValue(), String.class), tuple.getScore()))
+                        .collect(Collectors.toList());
+            }
+        });
+    }
+
+    /**
      * 往list最左边添加内容
      *
      * @param key
