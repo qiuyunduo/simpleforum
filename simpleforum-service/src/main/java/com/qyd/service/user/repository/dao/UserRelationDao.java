@@ -9,6 +9,7 @@ import com.qyd.api.model.vo.PageParam;
 import com.qyd.api.model.vo.user.dto.FollowUserInfoDTO;
 import com.qyd.service.user.repository.entity.UserRelationDO;
 import com.qyd.service.user.repository.mapper.UserRelationMapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.List;
  * @author 邱运铎
  * @date 2024-04-20 18:30
  */
+@Repository
 public class UserRelationDao extends ServiceImpl<UserRelationMapper, UserRelationDO> {
 
     /**

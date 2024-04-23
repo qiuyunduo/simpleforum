@@ -2,6 +2,7 @@ package com.qyd.service.rank.service.impl;
 
 import com.qyd.api.model.enums.rank.ActivityRankTimeEnum;
 import com.qyd.api.model.vo.rank.dto.RankItemDTO;
+import com.qyd.api.model.vo.user.dto.SimpleUserInfoDTO;
 import com.qyd.core.cache.RedisClient;
 import com.qyd.core.util.DateUtil;
 import com.qyd.service.rank.service.UserActivityRankService;
@@ -9,11 +10,16 @@ import com.qyd.service.rank.service.model.ActivityScoreBo;
 import com.qyd.service.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
-import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * @author 邱运铎
@@ -132,11 +138,41 @@ public class UserActivityRankServiceImpl implements UserActivityRankService {
 
     @Override
     public RankItemDTO queryRankInfo(Long userId, ActivityRankTimeEnum time) {
-        return null;
+        RankItemDTO item = new RankItemDTO();
+        item.setUser(userService.querySimpleUserInfo(userId));
+
+        String rankKey = time == ActivityRankTimeEnum.DAY ? todayRankKey() :monthRankKey();
+        ImmutablePair<Integer, Double> rank = RedisClient.zRankInfo(rankKey, String.valueOf(userId));
+        item.setRank(rank.getLeft());
+        item.setScore(rank.getRight().intValue());
+        return item;
     }
 
     @Override
     public List<RankItemDTO> queryRankList(ActivityRankTimeEnum time, int size) {
-        return null;
+        String rankKey = time == ActivityRankTimeEnum.DAY ? todayRankKey() : monthRankKey();
+        // 1. 获取topN的活跃用户
+        // todo 这里可以更新为自己使用 zRevRange 修改的 zTopNScoreNew 方法看是是否是一样的效果
+        List<ImmutablePair<String, Double>> rankList = RedisClient.zTopNScore(rankKey, size);
+        if (CollectionUtils.isEmpty(rankList)) {
+            return Collections.emptyList();
+        }
+
+        // 查询用户对应的基本信息
+        // 构建userId -> 活跃评分的map映射， 用于补齐用户信息
+        Map<Long, Integer> userScoreMap = rankList.stream()
+                .collect(Collectors.toMap(s -> Long.valueOf(s.getLeft()),
+                        s -> s.getRight().intValue()));
+        List<SimpleUserInfoDTO> users = userService.batchQuerySimpleUserInfo(userScoreMap.keySet());
+
+        // 3. 根据评分进行排序
+        List<RankItemDTO> rank = users.stream()
+                .map(user -> new RankItemDTO().setUser(user).setScore(userScoreMap.getOrDefault(user.getUserId(), 0)))
+                .sorted((o1, o2) -> Integer.compare(o2.getScore(), o1.getScore()))
+                .collect(Collectors.toList());
+
+        // 4. 补齐每个用户的排名
+        IntStream.range(0, rank.size()).forEach(i -> rank.get(i).setRank(i + 1));
+        return rank;
     }
 }

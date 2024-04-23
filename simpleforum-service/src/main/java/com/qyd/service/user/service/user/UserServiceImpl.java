@@ -199,7 +199,7 @@ public class UserServiceImpl implements UserService {
         }
 
         // 加入天数
-        int joinDayCount = (int) ((System.currentTimeMillis() - userHomeDTO.getCrateTime()
+        int joinDayCount = (int) ((System.currentTimeMillis() - userHomeDTO.getCreateTime()
                 .getTime()) / (1000 * 3600 * 24));
         userHomeDTO.setJoinDayCount(Math.max(joinDayCount, 1));
 

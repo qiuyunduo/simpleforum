@@ -9,7 +9,7 @@ server:
 
 spring:
   config:
-    import: application-config.yml,application-dal.yml
+    import: application-config.yml,application-dal.yml,application-web.yml,application-ai.yml
   mvc:
     async:
       request-timeout:

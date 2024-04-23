@@ -11,6 +11,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan("com.qyd.service")
 @MapperScan(basePackages = {
-        "com.qyd.service.article.repository.mapper"})
+        "com.qyd.service.article.repository.mapper",
+        "com.qyd.service.comment.repository.mapper",
+        "com.qyd.service.config.repository.mapper",
+        "com.qyd.service.user.repository.mapper",
+        "com.qyd.service.statistic.repository.mapper"})
 public class ServiceAutoConfig {
 }
