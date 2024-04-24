@@ -1,3 +1,20 @@
 view:
   site:
+
+    needLoginArticleReadCount: 30 # 需要登录才能阅读的文章次数
+    starArticleReadCount: 20 # 知识星球用户才能阅读的文章阅读次数统计间隔， 单位： 分钟
     websiteName: Simple Forum
+    websiteUrl: https://paicoding.com/icon.png
+    websiteFaviconIconUrl: https://paidcoding.com/img/icon.png
+    starUrl: https://paicoding.com/article/detail/314
+    starPosterUrl: https://cdn.tobebetterjavaer.com/tobebetterjavaer/images/javabetter.jpg
+    contactMeTitle: 联系我，- Children's Blog
+    contactMeWxQrCode: https://cdn.tobebetterjavaer.com/paicoding/paicoding-qrcode.png
+    contactMeStarQrCode: https://cdn.tobebetterjavaer.com/tobebetterjavaer/images/qiye-weixin.png
+    pageSize: 20
+    cdnImgStyle:
+    websiteRecord: 备案：蛮荒之地
+    wxLoginUrl: http://weixin.qq.com/r/WxwpMefE-rqBraNS90lJ
+    host: http://127.0.0.1:${server.port}
+    welcomeInfo: 欢迎来到Simple Forum 戳<a href="/article/detail/15">Simple Forum全方位视角解读</a>了解我们
+    oss:

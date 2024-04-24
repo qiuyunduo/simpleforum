@@ -10,6 +10,8 @@ server:
 spring:
   config:
     import: application-config.yml,application-dal.yml,application-web.yml,application-ai.yml
+  main:
+    allow-circular-references: true  # 允许循环引用
   mvc:
     async:
       request-timeout:
@@ -66,4 +68,4 @@ knife4j:
         api-rule: package
         api-rule-resources:
           - com.qyd.web.front
-  production: true  #开启生产环境屏蔽 这个配置和上面setting配置似乎有点关系，必须在setting配置中配置一个选项，否则会使用改配置会报错
+  # production: true  #开启生产环境屏蔽 这个配置和上面setting配置似乎有点关系，必须在setting配置中配置一个选项，否则会使用改配置会报错

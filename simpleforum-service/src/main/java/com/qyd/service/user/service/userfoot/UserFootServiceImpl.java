@@ -32,8 +32,9 @@ public class UserFootServiceImpl implements UserFootService {
 
     // 源代码那边这里和UserFootServiceImpl中存在循环嵌套问题，暂时不知道作者那边为什么没问题
     // 这里暂时注释掉，反正该服务中也没用到该对象
-//    @Autowired
-//    private ArticleReadService articleReadService;
+    // 问题已解决 ，通过在spring配置文件中设置 spring.main.allow-circular-references: true 即可解决，让spring去处理
+    @Autowired
+    private ArticleReadService articleReadService;
 
     @Autowired
     private CommentReadService commentReadService;

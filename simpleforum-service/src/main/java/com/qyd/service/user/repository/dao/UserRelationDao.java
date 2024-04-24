@@ -49,6 +49,9 @@ public class UserRelationDao extends ServiceImpl<UserRelationMapper, UserRelatio
      * 查询followUserId与给定的用户列表的关联关系
      * todo 什么地方会用到该方法，暂不清楚业务，该方法业务看代码是
      *  查找某个用户的所有关注且该关注的用户需要在给定的集合中
+     * 上面问题已解决。该方式适用于的场景如下：
+     *  登录用户在查看他人个人主页的关注用户和粉丝用户时
+     *  查找当前用户的关注和粉丝中那些是当前登录用户也关注的，。
      *
      * @param followUserId  粉丝用户ID
      * @param targetUserId  关注者用户id列表
