@@ -52,6 +52,7 @@ public class UserRelationDao extends ServiceImpl<UserRelationMapper, UserRelatio
      * 上面问题已解决。该方式适用于的场景如下：
      *  登录用户在查看他人个人主页的关注用户和粉丝用户时
      *  查找当前用户的关注和粉丝中那些是当前登录用户也关注的，。
+     *  补充一个场景： 在首页查看关注消息的情况也会用到该方法
      *
      * @param followUserId  粉丝用户ID
      * @param targetUserId  关注者用户id列表

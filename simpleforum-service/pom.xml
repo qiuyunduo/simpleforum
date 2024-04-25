@@ -24,6 +24,11 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+        </dependency>
+
         <!--引入es-high-level-client相关依赖  start-->
         <dependency>
             <groupId>org.elasticsearch</groupId>

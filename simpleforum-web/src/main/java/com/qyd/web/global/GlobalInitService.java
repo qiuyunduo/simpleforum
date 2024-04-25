@@ -1,5 +1,7 @@
 package com.qyd.web.global;
 
+import com.qyd.service.notify.service.NotifyService;
+import com.qyd.service.statistics.service.UserStatisticService;
 import com.qyd.service.user.service.UserService;
 import com.qyd.web.config.GlobalViewConfig;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +26,17 @@ public class GlobalInitService {
 
     @Resource
     private GlobalViewConfig globalViewConfig;
+
+    @Resource
+    private NotifyService notifyService;
+
+    @Resource
+    private SeoInjectService seoInjectService;
+
+    @Resource
+    private UserStatisticService userStatisticService;
+
+
 
 
 
