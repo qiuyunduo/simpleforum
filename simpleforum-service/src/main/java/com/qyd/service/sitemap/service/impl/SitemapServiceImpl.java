@@ -22,6 +22,7 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -187,7 +188,7 @@ public class SitemapServiceImpl implements SitemapService {
         // 用户的全局访问计数+1
         Long globalUserVisitCnt = RedisClient.hIncr(globalKey + "_" + visitIp, "pv", 1);
         // 用户的当天访问计数+1
-        Long todyaUserVisitCnt = RedisClient.hIncr(todayKey, "pv" + visitIp, 1);
+        Long todayUserVisitCnt = RedisClient.hIncr(todayKey, "pv" + visitIp, 1);
 
         RedisClient.PipelineAction pipelineAction = RedisClient.pipelineAction();
         if (globalUserVisitCnt == 1) {
@@ -205,12 +206,62 @@ public class SitemapServiceImpl implements SitemapService {
             // 全局站点的uv
             pipelineAction.add(globalKey, "uv", (connection, key, field) -> connection.hIncrBy(key, field, 1));
             pipelineAction.add(globalKey, "uv" + path, (connection, key, field) -> connection.hIncrBy(key, field, 1));
+        } else if (todayUserVisitCnt == 1) {
+            // 判断是今天的首次访问，更新今天的uv + 1
+            pipelineAction.add(todayKey, "uv", (connection, key, field) -> connection.hIncrBy(key, field, 1));
+            if (RedisClient.hIncr(todayKey, "pv_" + path + "_" + visitIp, 1) == 1) {
+                // 判断是否为今天首次访问这个资源，若是则 uv + 1
+                pipelineAction.add(todayKey, "uv_" + path, (connection, key, field) -> connection.hIncrBy(key, field, 1));
+            }
+
+            // 判断是否是用户的首次访问这个path, 若是，则全局的path uv计数需要+1
+            if (RedisClient.hIncr(globalKey + "_" + visitIp, "pv_" + path, 1) == 1) {
+                pipelineAction.add(globalKey, "uv_" + path, (connection, key, field) -> connection.hIncrBy(key, field, 1));
+            }
         }
 
+        // 更新pv 以及 用户的path访问信息
+        // 今天的相关信息， pv
+        pipelineAction.add(todayKey, "pv", (connection, key, filed) -> connection.hIncrBy(key, filed, 1));
+        pipelineAction.add(todayKey, "pv_v" + path, (connection, key, filed) -> connection.hIncrBy(key, filed, 1));
+
+        if (todayUserVisitCnt > 1) {
+            // 非当天首次访问， 则pv + 1; 因为首次访问时，在前面更新uv已经计数+1了，所以对uv不做处理
+            pipelineAction.add(todayKey, "pv_" + path + "_" + visitIp, (connection, key, field) -> connection.hIncrBy(key, field, 1));
+        }
+
+        // 全局的 pv
+        pipelineAction.add(globalKey, "pv", ((connection, key, field) -> connection.hIncrBy(key, field, 1)));
+        pipelineAction.add(globalKey, "pv_" + path, ((connection, key, field) -> connection.hIncrBy(key, field, 1)));
+
+        // 保存访问信息
+        pipelineAction.execute();
+        if (log.isDebugEnabled()) {
+            log.info("用户访问信息更新完成! 当前用户总访问： {}， 今日访问： {}", globalUserVisitCnt, todayUserVisitCnt);
+        }
     }
 
     @Override
     public SiteCntVo querySiteVisitInfo(LocalDate date, String path) {
-        return null;
+        String globalKey = SitemapConstants.SITE_VISIT_KEY;
+        String day = null, todayKey = globalKey;
+        if (date != null) {
+            day = SitemapConstants.day(date);
+            todayKey = globalKey + "_" + day;
+        }
+
+        String pvField = "pv", uvField = "uv";
+        if (path != null) {
+            // 表示查询对应路径的访问信息
+            pvField += "_" + path;
+            uvField += "_" + path;
+        }
+
+        Map<String, Integer> map = RedisClient.hMGet(todayKey, Arrays.asList(pvField, uvField), Integer.class);
+        SiteCntVo siteInfo = new SiteCntVo();
+        siteInfo.setDay(day);
+        siteInfo.setPv(map.getOrDefault(pvField, 0));
+        siteInfo.setUv(map.getOrDefault(uvField, 0));
+        return siteInfo;
     }
 }

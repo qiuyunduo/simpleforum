@@ -33,7 +33,7 @@ public class AiConfig {
          */
         private Integer star;
 
-        // 星球最大编号
+        // 星球最大编号, 对应星球的最大人数
         private Integer starNumber;
         /**
          * 星球试用用户 AI交互次数
