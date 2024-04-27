@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qyd.core.util.SpringUtil;
 import com.qyd.web.config.GlobalViewConfig;
+import com.qyd.web.global.ForumExceptionHandler;
 import com.qyd.web.hook.interceptor.GlobalViewInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,20 +13,30 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.List;
+
 /**
+ * 使用@ServletComponentScan注解后，Servlet（控制器）、Filter（过滤器）、Listener（监听器）
+ * 可以直接通过@WebServlet、@WebFilter、@WebListener注解自动注册到Spring容器中，无需其他代码。
+ *
  * @author 邱运铎
  * @date 2024-04-08 17:24
  */
 @Slf4j
+@EnableAsync
 @EnableScheduling
 @EnableCaching
+@ServletComponentScan
 @SpringBootApplication
 public class SimpleForumApplication implements WebMvcConfigurer, ApplicationRunner {
 
@@ -40,9 +51,15 @@ public class SimpleForumApplication implements WebMvcConfigurer, ApplicationRunn
     @Autowired
     private GlobalViewInterceptor globalViewInterceptor;
 
+    @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(globalViewInterceptor)
                 .addPathPatterns("/**");
+    }
+
+    @Override
+    public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> resolvers) {
+        resolvers.add(0, new ForumExceptionHandler());
     }
 
     public static void main(String[] args) {

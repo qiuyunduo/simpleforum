@@ -70,7 +70,7 @@ public class ColumnDTO {
     /**
      * 专栏限免结束时间
      */
-    private Long freeEndTIme;
+    private Long freeEndTime;
 
     /**
      * 专栏作者id
