@@ -6,7 +6,7 @@ import lombok.Data;
 import java.security.Principal;
 
 /**
- * 请求上下文，鞋带用户身份相关信息
+ * 请求上下文，携带用户身份相关信息
  *
  * @author 邱运铎
  * @date 2024-04-11 0:49

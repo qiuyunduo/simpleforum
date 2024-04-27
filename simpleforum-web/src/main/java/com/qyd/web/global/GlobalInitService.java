@@ -75,8 +75,9 @@ public class GlobalInitService {
         }
 
         try {
+            ReqInfoContext.ReqInfo reqInfo = ReqInfoContext.getReqInfo();
             if (ReqInfoContext.getReqInfo() != null
-                    || NumUtil.upZero(ReqInfoContext.getReqInfo().getUserId())) {
+                    && NumUtil.upZero(ReqInfoContext.getReqInfo().getUserId())) {
                 vo.setIsLogin(true);
                 vo.setUser(ReqInfoContext.getReqInfo().getUser());
                 vo.setMsgNum(ReqInfoContext.getReqInfo().getMsgNum());

@@ -1,2 +1,11 @@
 env:
   name: dev
+
+# spring 的 thymeleaf 基础配置
+spring:
+  thymeleaf:
+    mode: HTML
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    cache: true # 开启缓存

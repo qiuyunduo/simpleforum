@@ -1,6 +1,5 @@
 view:
   site:
-
     needLoginArticleReadCount: 30 # 需要登录才能阅读的文章次数
     starArticleReadCount: 20 # 知识星球用户才能阅读的文章阅读次数统计间隔， 单位： 分钟
     websiteName: Simple Forum
