@@ -1,3 +1,6 @@
+log:
+  path: logs  # 开发环境下日志存放位置
+
 env:
   name: dev
 

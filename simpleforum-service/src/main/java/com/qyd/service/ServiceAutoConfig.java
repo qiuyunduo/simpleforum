@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
         "com.qyd.service.comment.repository.mapper",
         "com.qyd.service.config.repository.mapper",
         "com.qyd.service.user.repository.mapper",
-        "com.qyd.service.statistic.repository.mapper",
+        "com.qyd.service.statistics.repository.mapper",
         "com.qyd.service.notify.repository.mapper"})
 public class ServiceAutoConfig {
 }

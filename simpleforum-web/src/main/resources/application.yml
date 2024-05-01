@@ -9,7 +9,7 @@ server:
 
 spring:
   config:
-    import: application-config.yml,application-dal.yml,application-web.yml,application-ai.yml
+    import: application-email.yml,application-config.yml,application-dal.yml,application-web.yml,application-ai.yml
   main:
     allow-circular-references: true  # 允许循环引用
   mvc:
@@ -43,6 +43,7 @@ mybatis-plus:
 
 # Knife4j 配置
 knife4j:
+  # production: true  #开启生产环境屏蔽 这个配置和上面setting配置似乎有点关系，必须在setting配置中配置一个选项，否则会使用改配置会报错， 改配置放在prod环境
   enable: true
   setting:
     language: zh-CN
@@ -68,4 +69,7 @@ knife4j:
         api-rule: package
         api-rule-resources:
           - com.qyd.web.front
-  # production: true  #开启生产环境屏蔽 这个配置和上面setting配置似乎有点关系，必须在setting配置中配置一个选项，否则会使用改配置会报错
+
+logging:
+  level:
+    com.qyd.service.rank.service.impl.*: debug # 指定具体包下的日志输出级别

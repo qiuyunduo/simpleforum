@@ -50,6 +50,9 @@ public class ReqInfoContext {
 
         /**
          * referer 引用 -- 不清楚该字段含义
+         * 已有初步理解： 该字段是为了记录http请求头中Header中的一个字段
+         * 记录请求来源页面url,一般用来做防盗链,验证当前请求是通过点击本网站的链接进行请求的，
+         * 而不是直接通过手动输入，或其他工具模仿，或其他非授权网站请求的
          */
         private String referer;
 

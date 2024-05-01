@@ -91,6 +91,18 @@
             <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
 
+        <!--  邮件  -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
+        <!-- aspectj aop  -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+        </dependency>
+
         <!-- 持久层相关依赖 mybatis plus 和 mysql-->
         <dependency>
             <groupId>org.mybatis</groupId>

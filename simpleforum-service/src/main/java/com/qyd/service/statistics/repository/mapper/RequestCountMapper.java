@@ -38,6 +38,6 @@ public interface RequestCountMapper extends BaseMapper<RequestCountDO> {
      *
      * @param id
      */
-    @Update("update request_count set cnt = cnt + 1 where id = #{id}}")
+    @Update("update request_count set cnt = cnt + 1 where id = #{id}")
     void incrementCount(Long id);
 }
