@@ -32,7 +32,7 @@ import java.util.stream.IntStream;
  */
 public class RedisClient {
     private static final Charset CODE = StandardCharsets.UTF_8;
-    private static final String KEY_PREFIX = "pai_";
+    private static final String KEY_PREFIX = "simple_forum_";
     private static RedisTemplate<String, String> template;
 
     public static void register(RedisTemplate<String, String> template) {

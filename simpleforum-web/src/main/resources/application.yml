@@ -12,6 +12,8 @@ spring:
     import: application-email.yml,application-config.yml,application-dal.yml,application-web.yml,application-ai.yml
   main:
     allow-circular-references: true  # 允许循环引用
+    # 允许多个重名bean进行覆盖，主要是为了实现多数据源功能，自主注册的datasource替换默认的
+    allow-bean-definition-overriding: true
   mvc:
     async:
       request-timeout:

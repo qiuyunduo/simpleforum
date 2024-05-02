@@ -1,8 +1,33 @@
 spring:
-  datasource: #单数据源
-    url: jdbc:mysql://localhost:3306/${database.name}?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
-    username: qiuyunduo
-    password: 123456
+#  datasource: #单数据源
+#    url: jdbc:mysql://localhost:3306/${database.name}?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+#    username: qiuyunduo
+#    password: 123456
+  dynamic:  # 动态数据源
+    primary: master  # 这个表示默认的数据源
+    datasource:
+      master:
+        # 数据库名，从配置 database.name 中获取
+        url: jdbc:mysql://localhost:3306/${database.name}?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+        username: qiuyunduo
+        password: 123456
+        # 下面这个type ,选择使用DruidDataSource时，应确保项目中添加了Druid相关依赖
+        type: com.alibaba.druid.pool.DruidDataSource
+        # DruidDataSource 自有属性， DruidDataSource是阿里写的数据库连接池，非常普遍的使用方式
+        filters: stat
+        initialSize: 0
+        midIdle: 1
+        maxActive: 200
+        maxWait: 10000
+        time-between-eviction-runs-mills: 60000
+        min-evictable-idle-time-mills: 200000
+        testWhileIdle: true
+        testOnBorrow: true
+        validationQuery: select 1
+      slave:
+        url: jdbc:mysql://localhost:3306/${database.name}?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+        username: readonly
+        password:
   redis:
     host: localhost
     port: 6379

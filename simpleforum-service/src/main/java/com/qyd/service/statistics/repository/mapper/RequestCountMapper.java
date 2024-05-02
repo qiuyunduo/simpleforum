@@ -22,7 +22,7 @@ public interface RequestCountMapper extends BaseMapper<RequestCountDO> {
      *
      * @return
      */
-    @Select("select sum(cnt) from request_count)")
+    @Select("select sum(cnt) from request_count")
     Long getPvTotalCount();
 
     /**
