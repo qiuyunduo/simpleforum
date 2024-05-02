@@ -1,5 +1,6 @@
 package com.qyd.web.error;
 
+import com.qyd.web.global.BaseViewController;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller("/error")
 @RequestMapping("${server.error.path:${error.path:/error}}")
-public class CustomizeErrorController implements ErrorController {
+public class CustomizeErrorController extends BaseViewController implements ErrorController {
 
     @RequestMapping(produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView errorHtml(HttpServletRequest request, Model model) {

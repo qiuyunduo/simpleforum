@@ -15,6 +15,9 @@ spring:
   mvc:
     async:
       request-timeout:
+  liquibase:
+    change-log: classpath:liquibase/master.xml
+    enabled: true  # 当实际使用的数据库不支持liquibase, 如 mariadb时，将这个参数设置false
   servlet:
     multipart:  #web 应用中文件上传功能相关配置
       enabled: true

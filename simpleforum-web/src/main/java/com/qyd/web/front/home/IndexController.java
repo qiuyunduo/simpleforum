@@ -2,6 +2,7 @@ package com.qyd.web.front.home;
 
 import com.qyd.web.front.home.helper.IndexRecommendHelper;
 import com.qyd.web.front.home.vo.IndexVo;
+import com.qyd.web.global.BaseViewController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 邱运铎
@@ -16,7 +18,7 @@ import java.util.List;
  */
 
 @Controller
-public class IndexController {
+public class IndexController extends BaseViewController {
 
     @Autowired
     IndexRecommendHelper indexRecommendHelper;

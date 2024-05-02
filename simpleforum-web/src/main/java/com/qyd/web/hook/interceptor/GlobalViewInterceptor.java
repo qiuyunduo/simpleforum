@@ -88,32 +88,34 @@ public class GlobalViewInterceptor implements AsyncHandlerInterceptor {
         }
         return true;
     }
-
-    @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        if (!ObjectUtils.isEmpty(modelAndView)) {
-            if (response.getStatus() != HttpStatus.OK.value()) {
-                try {
-                    ReqInfoContext.ReqInfo reqInfo = new ReqInfoContext.ReqInfo();
-                    // fixme 此fixme为原作者所写-对于异常重定向到 /error 时。会导致登录信息丢失，待解决
-                    // 作者的这个fixme 表示下面的代码是为了修复这个问题，并且已经通过下面代码修复了，而不是仍存在问题
-                    // 所以作者在这里为了修复异常重定向后用户登录信息丢失问题，在拦截器这里对于那些非Http.Ok的请求
-                    // 先初始化下登录用户信息，主要是初始化ReqInfo这个携带用户登录信息的ThreadLocal
-                    // 之后再通过globalInitService从ReqInfoContext中取出放入global中
-                    // 完成这个动作后，可以将ReqInfoContext中的ReqInfo清除，因为用户登录信息已经存到global中了，避免OOM.
-                    globalInitService.initLoginUser(reqInfo);
-                    // 将登陆用户基本信息塞入到ReqInfoContext中的ThreadLocal中，没有登录就是null
-                    ReqInfoContext.addReqInfo(reqInfo);
-                    modelAndView.getModel().put("global", globalInitService.globalAttr());
-                } finally {
-                    // todo 这里清除用户的登录信息，和try中初始化用户登录信息不是矛盾了吗
-                    // 目前有点理解了， 作者将ReqInfo中的信息转入到global,该ThreadLocal其实就没用了
-                    // 作者只是将ReqInfo作为获取用户信息到global中的一个中转站
-                    ReqInfoContext.clear();
-                }
-            } else {
-                modelAndView.getModel().put("global", globalInitService.globalAttr());
-            }
-        }
-    }
+    /**
+     * 使用了 GlobalBasicController 中@ModelAttribute注解方式注入global，目前放弃下面这种方法，看后面是否存在问题
+     */
+//    @Override
+//    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+//        if (!ObjectUtils.isEmpty(modelAndView)) {
+//            if (response.getStatus() != HttpStatus.OK.value()) {
+//                try {
+//                    ReqInfoContext.ReqInfo reqInfo = new ReqInfoContext.ReqInfo();
+//                    // fixme 此fixme为原作者所写-对于异常重定向到 /error 时。会导致登录信息丢失，待解决
+//                    // 作者的这个fixme 表示下面的代码是为了修复这个问题，并且已经通过下面代码修复了，而不是仍存在问题
+//                    // 所以作者在这里为了修复异常重定向后用户登录信息丢失问题，在拦截器这里对于那些非Http.Ok的请求
+//                    // 先初始化下登录用户信息，主要是初始化ReqInfo这个携带用户登录信息的ThreadLocal
+//                    // 之后再通过globalInitService从ReqInfoContext中取出放入global中
+//                    // 完成这个动作后，可以将ReqInfoContext中的ReqInfo清除，因为用户登录信息已经存到global中了，避免OOM.
+//                    globalInitService.initLoginUser(reqInfo);
+//                    // 将登陆用户基本信息塞入到ReqInfoContext中的ThreadLocal中，没有登录就是null
+//                    ReqInfoContext.addReqInfo(reqInfo);
+//                    modelAndView.getModel().put("global", globalInitService.globalAttr());
+//                } finally {
+//                    // todo 这里清除用户的登录信息，和try中初始化用户登录信息不是矛盾了吗
+//                    // 目前有点理解了， 作者将ReqInfo中的信息转入到global,该ThreadLocal其实就没用了
+//                    // 作者只是将ReqInfo作为获取用户信息到global中的一个中转站
+//                    ReqInfoContext.clear();
+//                }
+//            } else {
+//                modelAndView.getModel().put("global", globalInitService.globalAttr());
+//            }
+//        }
+//    }
 }
