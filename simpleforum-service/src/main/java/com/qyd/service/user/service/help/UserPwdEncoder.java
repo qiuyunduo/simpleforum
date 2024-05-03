@@ -43,4 +43,20 @@ public class UserPwdEncoder {
         }
         return DigestUtils.md5DigestAsHex(plainPwd.getBytes(StandardCharsets.UTF_8));
     }
+
+    // 在自己更换密码的盐和加盐位置后，admin账户的密码admin需要自己重新生成加密一下放到数据库
+    public static void main(String[] args) {
+        String res = "c34c74cfbcccb8af0baedd02db9b4781";
+        String paiRes = "df3a4143b663a086d1c006c8084db1b1";
+        String plainPwd = "admin";
+//        String salt = "simple_forum_salt";
+        String salt = "tech_π";
+        int saltIndex = 3;
+        if (plainPwd.length() > saltIndex) {
+            plainPwd = plainPwd.substring(0, saltIndex) + salt + plainPwd.substring(saltIndex);
+        } else {
+            plainPwd = plainPwd + salt;
+        }
+        System.out.println(DigestUtils.md5DigestAsHex(plainPwd.getBytes(StandardCharsets.UTF_8)));
+    }
 }

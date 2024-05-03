@@ -45,10 +45,14 @@ public class DataSourceConfig {
         return new DsAspect();
     }
 
-    @Bean
-    public SqlStateInterceptor sqlStateInterceptor() {
-        return new SqlStateInterceptor();
-    }
+    /**
+     * 不想在控制条看具体sql情况，先不讲自定义mybatis拦截日志注入进来
+     * @return
+     */
+//    @Bean
+//    public SqlStateInterceptor sqlStateInterceptor() {
+//        return new SqlStateInterceptor();
+//    }
 
     /**
      * 配置动态数据源
