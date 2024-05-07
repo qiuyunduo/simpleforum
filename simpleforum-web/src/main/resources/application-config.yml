@@ -1,7 +1,7 @@
 view:
   site:
     needLoginArticleReadCount: 30 # 需要登录才能阅读的文章次数
-    starArticleReadCount: 20 # 知识星球用户才能阅读的文章阅读次数统计间隔， 单位： 分钟
+    starArticleReadCount: 20 # 知识星球用户才能阅读的文章阅读次数统计间隔， 单位： 分钟; 这里从controller层代码看是控制未绑定星球的用户可查看专栏文章内容的百分比值
     websiteName: Simple Forum
     websiteUrl: https://paicoding.com/icon.png
     websiteFaviconIconUrl: https://paidcoding.com/img/icon.png

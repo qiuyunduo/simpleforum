@@ -142,8 +142,8 @@ public class SidebarServiceImpl implements SidebarService {
         List<SideBarItemDTO> items = vo.getList().stream()
                 .map(s -> new SideBarItemDTO()
                         .setTitle(s.getTitle())
-                        .setUrl("/article/detial/" + s.getId())
-                        .setTime(s.getCreateTIme().getTime()))
+                        .setUrl("/article/detail/" + s.getId())
+                        .setTime(s.getCreateTime().getTime()))
                 .collect(Collectors.toList());
         return new SideBarDTO().setTitle("热门文章")
                 .setItems(items)
@@ -278,7 +278,7 @@ public class SidebarServiceImpl implements SidebarService {
                 .map(s -> new SideBarItemDTO()
                         .setTitle(s.getTitle())
                         .setUrl("/article/detail" + s.getId())
-                        .setTime(s.getCreateTIme().getTime()))
+                        .setTime(s.getCreateTime().getTime()))
                 .collect(Collectors.toList());
         return new SideBarDTO().setTitle("相关文章")
                 .setItems(items)

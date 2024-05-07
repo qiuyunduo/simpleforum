@@ -86,7 +86,7 @@ public class SitemapServiceImpl implements SitemapService {
             // 刷新站点地图信息
             Map<String, Long> map = list.stream()
                     // 这里最后转为map的 (a, b) -> a 是用于处理在转换为map时key重复冲突时的处理对策。
-                    .collect(Collectors.toMap(s -> String.valueOf(s.getId()), s -> s.getCreateTIme().getTime(), (a, b) -> a));
+                    .collect(Collectors.toMap(s -> String.valueOf(s.getId()), s -> s.getCreateTime().getTime(), (a, b) -> a));
             RedisClient.hMSet(SITE_MAP_CACHE_KEY, map);
             if (list.size() < SCAN_SIZE) {
                 break;

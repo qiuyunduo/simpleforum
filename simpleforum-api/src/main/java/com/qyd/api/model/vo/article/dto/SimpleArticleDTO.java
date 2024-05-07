@@ -35,7 +35,7 @@ public class SimpleArticleDTO implements Serializable {
     private Integer sort;
 
     @ApiModelProperty("创建时间")
-    private Timestamp createTIme;
+    private Timestamp createTime;
 
     /**
      * @see ColumnArticleReadEnum#getRead()

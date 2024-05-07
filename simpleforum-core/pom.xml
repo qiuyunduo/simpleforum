@@ -103,6 +103,13 @@
             <artifactId>aspectjweaver</artifactId>
         </dependency>
 
+        <!--  将 Markdown 转换为 HTML  -->
+        <dependency>
+            <groupId>com.vladsch.flexmark</groupId>
+            <artifactId>flexmark-all</artifactId>
+            <version>0.62.2</version>
+        </dependency>
+
         <!-- 持久层相关依赖 mybatis plus 和 mysql-->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -135,6 +142,12 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.plexpt</groupId>
+            <artifactId>chatgpt</artifactId>
+            <version>4.0.5</version>
         </dependency>
     </dependencies>
 </project>

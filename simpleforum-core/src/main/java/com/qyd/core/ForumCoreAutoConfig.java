@@ -2,6 +2,11 @@ package com.qyd.core;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.qyd.core.cache.RedisClient;
+import com.qyd.core.config.ImageProperties;
+import com.qyd.core.config.ProxyProperties;
+import com.qyd.core.net.ProxyCenter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.context.annotation.Bean;
@@ -9,6 +14,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import javax.annotation.PostConstruct;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -17,7 +23,10 @@ import java.util.concurrent.TimeUnit;
  */
 @Configuration
 @ComponentScan(basePackages = "com.qyd.core")
+@EnableConfigurationProperties({ImageProperties.class, ProxyProperties.class})
 public class ForumCoreAutoConfig {
+    @Autowired
+    private ProxyProperties proxyProperties;
 
     public ForumCoreAutoConfig(RedisTemplate<String, String> redisTemplate) {
         RedisClient.register(redisTemplate);
@@ -37,5 +46,11 @@ public class ForumCoreAutoConfig {
                 .maximumSize(200)
         );
         return cacheManager;
+    }
+
+    @PostConstruct
+    public void init() {
+        // 这里借助手动解析配置信息，病实例化为java pojo对象，来实现代理池的初始化
+        ProxyCenter.initProxyPool(proxyProperties.getProxy());
     }
 }
