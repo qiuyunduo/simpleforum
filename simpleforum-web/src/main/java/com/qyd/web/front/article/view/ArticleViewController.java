@@ -111,7 +111,7 @@ public class ArticleViewController extends BaseViewController {
         // 针对专栏文章，做一个重定向
         ColumnArticleDO columnArticle = columnService.getColumnArticleRelation(articleId);
         if (columnArticle != null) {
-            return String.format("redict:/column/%d/%d", columnArticle.getColumnId(), columnArticle.getSection());
+            return String.format("redirect:/column/%d/%d", columnArticle.getColumnId(), columnArticle.getSection());
         }
 
         ArticleDetailVo vo = new ArticleDetailVo();

@@ -19,7 +19,7 @@ public class NotifyMsgDTO implements Serializable {
     /**
      * 消息关联的主体，如文章、评论等id
      */
-    private String relateId;
+    private String relatedId;
 
     /**
      * 关联信息

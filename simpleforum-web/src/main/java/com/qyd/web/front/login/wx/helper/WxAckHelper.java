@@ -2,6 +2,7 @@ package com.qyd.web.front.login.wx.helper;
 
 import com.qyd.api.model.vo.user.wx.*;
 import com.qyd.core.util.CodeGenerateUtil;
+import com.qyd.service.chatai.service.ChatGptService;
 import com.qyd.service.user.service.LoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class WxAckHelper {
     @Autowired
     private WxLoginHelper qrLoginHelper;
 
+    @Autowired
+    private ChatGptService chatGptService;
+
     public BaseWxMsgResVo buildResponseBody(String eventType, String content, String fromUser) {
         // 返回的文本消息
         String textRes = null;
@@ -34,6 +38,15 @@ public class WxAckHelper {
             textRes = "优秀的你一关注，我那英俊的脸上就泛起了笑容。\n"
                     + "\n"
                     + "感谢你的关注！让我们一起撸起袖子加油干！！！";
+        }
+        // 微信公众号接入Gpt3.5
+        else if (chatGptService.inChat(fromUser, content)) {
+            try {
+                textRes = chatGptService.chat(fromUser, content);
+            } catch (Exception e) {
+                log.error("派聪明 访问异常! content: {}", content, e);
+                textRes = "派聪明 除了点小状况，请稍后重试";
+            }
         }
         else if ("加群".equalsIgnoreCase(content)) {
             WxImgTxtItemVo imgTxt = new WxImgTxtItemVo();

@@ -62,9 +62,22 @@ public class ChatItemVo implements Serializable, Cloneable {
         return this;
     }
 
+    /**
+     * 记录返回结果及回答时间
+     *
+     * @param answer
+     * @return
+     */
     public ChatItemVo initAnswer(String answer) {
         this.answer = answer;
         this.answerType = ChatAnswerTypeEnum.TEXT;
+        setAnswerTime();
+        return this;
+    }
+
+    public ChatItemVo initAnswer(String answer, ChatAnswerTypeEnum answerType) {
+        this.answer = answer;
+        this.answerType = answerType;
         setAnswerTime();
         return this;
     }

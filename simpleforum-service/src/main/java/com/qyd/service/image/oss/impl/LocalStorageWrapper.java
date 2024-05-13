@@ -27,7 +27,7 @@ import java.util.Random;
  */
 @Slf4j
 @Component
-@ConditionalOnExpression(value = "#{'local'.equals(environment.getProperty('img.oss.type'))}")
+@ConditionalOnExpression(value = "#{'local'.equals(environment.getProperty('image.oss.type'))}")
 public class LocalStorageWrapper implements ImageUploader {
     @Autowired
     private ImageProperties imageProperties;

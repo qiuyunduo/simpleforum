@@ -5,6 +5,7 @@ import com.qyd.core.cache.RedisClient;
 import com.qyd.core.config.ImageProperties;
 import com.qyd.core.config.ProxyProperties;
 import com.qyd.core.net.ProxyCenter;
+import com.qyd.core.senstive.SensitiveProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
@@ -23,7 +24,9 @@ import java.util.concurrent.TimeUnit;
  */
 @Configuration
 @ComponentScan(basePackages = "com.qyd.core")
-@EnableConfigurationProperties({ImageProperties.class, ProxyProperties.class})
+@EnableConfigurationProperties({ImageProperties.class,
+        ProxyProperties.class,
+        SensitiveProperty.class})
 public class ForumCoreAutoConfig {
     @Autowired
     private ProxyProperties proxyProperties;

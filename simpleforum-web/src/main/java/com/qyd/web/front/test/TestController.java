@@ -1,4 +1,4 @@
-package com.qyd.web.test;
+package com.qyd.web.front.test;
 
 import com.qyd.api.model.context.ReqInfoContext;
 import com.qyd.core.dal.DsAno;

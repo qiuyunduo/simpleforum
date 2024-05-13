@@ -9,7 +9,7 @@ server:
 
 spring:
   config:
-    import: application-image.yml,application-email.yml,application-config.yml,application-dal.yml,application-web.yml,application-ai.yml
+    import: application-rabbitmq.yml,application-image.yml,application-email.yml,application-config.yml,application-dal.yml,application-web.yml,application-ai.yml
   main:
     allow-circular-references: true  # 允许循环引用
     # 允许多个重名bean进行覆盖，主要是为了实现多数据源功能，自主注册的datasource替换默认的
@@ -31,6 +31,10 @@ security:
   salt-index: 3 # 盐插入的位置
 
 forum:
+  sensitive:  # 敏感词校验相关配置
+    enable: true
+    deny:   # 自定义的敏感词，英文逗号分隔
+    allow:  # 自定义的非敏感词，英文逗号分隔
   jwt:
     issuer: simple_forum #jwt 签发者
     secret: hello_world  #签名秘钥

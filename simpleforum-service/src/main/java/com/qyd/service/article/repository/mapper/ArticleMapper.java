@@ -55,8 +55,8 @@ public interface ArticleMapper extends BaseMapper<ArticleDO> {
      * @return
      */
     List<ReadCountDO> listArticleByCategoryAndTags(@Param("categoryId") Long categoryId,
-                                                   @Param("tagsIds") List<Long> tagIds,
-                                                   @Param("pageParams") PageParam pageParam);
+                                                   @Param("tagIds") List<Long> tagIds,
+                                                   @Param("pageParam") PageParam pageParam);
 
     /**
      * 根据用户Id获取创作历程
