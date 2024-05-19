@@ -19,6 +19,7 @@ import com.qyd.service.user.repository.params.SearchStarWhiteParams;
 import com.qyd.service.user.service.StarWhiteListService;
 import com.qyd.service.user.service.help.UserPwdEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -28,6 +29,7 @@ import java.util.List;
  * @author 邱运铎
  * @date 2024-05-13 16:00
  */
+@Service
 public class StarWhiteListServiceImpl implements StarWhiteListService {
     @Autowired
     private UserAiDao userAiDao;

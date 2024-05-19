@@ -64,7 +64,7 @@ public class ConfigDao extends ServiceImpl<ConfigMapper, ConfigDO> {
      * @param params
      * @return
      */
-    public List<ConfigDTO> lisBanner(SearchConfigParams params) {
+    public List<ConfigDTO> listBanner(SearchConfigParams params) {
         List<ConfigDO> configDOS = createConfigQuery(params)
                 .orderByDesc(ConfigDO::getUpdateTime)
                 .orderByAsc(ConfigDO::getRank)

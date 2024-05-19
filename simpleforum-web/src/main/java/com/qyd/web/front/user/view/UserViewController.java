@@ -119,6 +119,9 @@ public class UserViewController extends BaseViewController {
         UserStatisticInfoDTO userInfo = userService.queryUserInfoWithStatistic(userId);
         vo.setUserHome(userInfo);
 
+        List<TagSelectDTO> homeSelectTags = homeSelectTags(vo.getHomeSelectType(), Objects.equals(userId, ReqInfoContext.getReqInfo().getUserId()));
+        vo.setHomeSelectTags(homeSelectTags);
+
         userHomeSelectList(vo, userId);
         return vo;
     }

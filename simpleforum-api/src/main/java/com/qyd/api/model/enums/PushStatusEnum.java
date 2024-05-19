@@ -30,4 +30,16 @@ public enum PushStatusEnum {
         }
         return PushStatusEnum.OFFLINE;
     }
+
+    public static Boolean isPushStatusCode(Integer code) {
+        if (code == null) {
+            return false;
+        }
+        for (PushStatusEnum pushStatusEnum : PushStatusEnum.values()) {
+            if (pushStatusEnum.getCode() == code) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
